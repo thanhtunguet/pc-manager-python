@@ -1,0 +1,6 @@
+python-telegram-bot>=20.7
+google-generativeai>=0.3.2
+requests>=2.31.0
+python-dotenv>=1.0.0
+PySocks>=1.7.1
+httpx[socks]>=0.24.0
