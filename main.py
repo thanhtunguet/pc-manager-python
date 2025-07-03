@@ -1,11 +1,8 @@
 import os
 import logging
-import asyncio
 from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-from telegram.request import HTTPXRequest
-import httpx
 
 from bot.gemini_client import GeminiClient
 from bot.handlers import PCControlBot
@@ -84,12 +81,20 @@ def main():
         proxy_url = create_proxy_config()
         
         # Create Telegram application with proxy support
-        if proxy_url:
-            # Create application with proxy support
-            application = Application.builder().token(telegram_token).proxy(proxy_url).build()
-        else:
-            # Create application without proxy
-            application = Application.builder().token(telegram_token).build()
+        try:
+            if proxy_url:
+                # Create application with proxy support
+                logger.info(f"Configuring application with proxy: {proxy_url}")
+                application = Application.builder().token(telegram_token).proxy(proxy_url).build()
+            else:
+                # Create application without proxy
+                logger.info("Creating application without proxy")
+                application = Application.builder().token(telegram_token).build()
+        except Exception as e:
+            logger.error(f"Failed to create Telegram application: {e}")
+            if proxy_url:
+                logger.error("Proxy configuration may be incorrect. Try without proxy or check proxy settings.")
+            raise
         
         # Add command handlers
         application.add_handler(CommandHandler("start", pc_bot.start_command))
@@ -103,9 +108,10 @@ def main():
         application.add_error_handler(pc_bot.error_handler)
         
         logger.info("PC Manager Telegram Bot started successfully")
+        logger.info("Bot is now listening for messages...")
         
         # Run the bot
-        application.run_polling(allowed_updates=Update.ALL_TYPES)
+        application.run_polling(allowed_updates=Update.ALL_TYPES, timeout=3)
         
     except Exception as e:
         logger.error(f"Failed to start bot: {e}")

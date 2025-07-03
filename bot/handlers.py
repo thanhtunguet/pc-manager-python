@@ -137,8 +137,8 @@ Hãy gửi tin nhắn để bắt đầu điều khiển máy tính của bạn.
             Response message
         """
         try:
-            url = f"{self.pc_api_base_url}/power-on"
-            response = requests.post(url, timeout=10)
+            url = f"{self.pc_api_base_url}/turn-on"
+            response = requests.get(url, timeout=10)
             
             if response.status_code == 200:
                 logger.info("PC turned on successfully")
@@ -159,8 +159,8 @@ Hãy gửi tin nhắn để bắt đầu điều khiển máy tính của bạn.
             Response message
         """
         try:
-            url = f"{self.pc_api_base_url}/power-off"
-            response = requests.post(url, timeout=10)
+            url = f"{self.pc_api_base_url}/turn-off"
+            response = requests.get(url, timeout=10)
             
             if response.status_code == 200:
                 logger.info("PC turned off successfully")
@@ -187,8 +187,8 @@ Hãy gửi tin nhắn để bắt đầu điều khiển máy tính của bạn.
             if response.status_code == 200:
                 # Assume API returns JSON with online status
                 try:
-                    data = response.json()
-                    is_online = data.get('online', False)
+                    data = response.text
+                    is_online = data == "true"
                     
                     if is_online:
                         logger.info("PC is online")

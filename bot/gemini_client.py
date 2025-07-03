@@ -17,7 +17,7 @@ class GeminiClient:
         genai.configure(api_key=api_key)
         
         # Initialize the model
-        self.model = genai.GenerativeModel('gemini-pro')
+        self.model = genai.GenerativeModel('gemini-2.0-flash')
         
         # Define PC control functions for Gemini
         self.functions = [
