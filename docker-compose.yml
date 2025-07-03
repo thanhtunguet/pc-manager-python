@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  pc-manager-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pc-manager-telegram-bot
+    restart: unless-stopped
+    
+    # Environment variables from .env file
+    env_file:
+      - .env
+    
+    # Alternative: Define environment variables directly
+    # environment:
+    #   - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+    #   - GEMINI_API_KEY=${GEMINI_API_KEY}
+    #   - PC_API_BASE_URL=${PC_API_BASE_URL}
+    #   - PROXY_HOST=${PROXY_HOST}
+    #   - PROXY_PORT=${PROXY_PORT}
+    #   - PROXY_USERNAME=${PROXY_USERNAME}
+    #   - PROXY_PASSWORD=${PROXY_PASSWORD}
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('https://api.telegram.org', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+
+# Optional: Add a network for better isolation
+networks:
+  default:
+    name: pc-manager-network

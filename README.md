@@ -15,10 +15,17 @@ Bot này sử dụng Google Gemini AI để hiểu ý định người dùng và
 
 ## 📋 Yêu cầu
 
-- Python 3.11+
+### Yêu cầu chung:
 - Telegram Bot Token (từ [@BotFather](https://t.me/BotFather))
 - Google Gemini API Key
 - PC với REST API endpoint có sẵn
+
+### Yêu cầu cho Python:
+- Python 3.11+
+
+### Yêu cầu cho Docker:
+- Docker Engine 20.10+
+- Docker Compose 2.0+ (khuyến nghị)
 
 ## 🚀 Cài đặt
 
@@ -29,7 +36,7 @@ git clone <repository-url>
 cd pc-manager-python
 ```
 
-### 2. Cài đặt dependencies
+### 2. Cài đặt dependencies (chỉ khi chạy với Python)
 
 ```bash
 pip install -r requirements.txt
@@ -69,8 +76,46 @@ PROXY_PASSWORD=your_proxy_password
 
 ### 4. Chạy bot
 
+#### Cách 1: Chạy trực tiếp với Python
+
 ```bash
 python main.py
+```
+
+#### Cách 2: Chạy với Docker (Khuyến nghị)
+
+**Sử dụng Docker Compose (dễ nhất):**
+
+```bash
+# Build và chạy container
+docker-compose up -d
+
+# Xem logs
+docker-compose logs -f
+
+# Dừng container
+docker-compose down
+```
+
+**Sử dụng Docker trực tiếp:**
+
+```bash
+# Build image
+docker build -t pc-manager-bot .
+
+# Chạy container
+docker run -d \
+  --name pc-manager-bot \
+  --env-file .env \
+  --restart unless-stopped \
+  pc-manager-bot
+
+# Xem logs
+docker logs -f pc-manager-bot
+
+# Dừng container
+docker stop pc-manager-bot
+docker rm pc-manager-bot
 ```
 
 ## 📚 Hướng dẫn sử dụng
@@ -126,6 +171,9 @@ project/
 │   ├── handlers.py          # Telegram bot handlers
 │   └── gemini_client.py     # Google Gemini AI client
 ├── .env.example             # Environment variables template
+├── .dockerignore            # Docker ignore file
+├── Dockerfile               # Docker image configuration
+├── docker-compose.yml       # Docker Compose configuration
 ├── main.py                  # Entry point
 ├── requirements.txt         # Python dependencies
 └── README.md               # Documentation
@@ -163,6 +211,12 @@ Bot sử dụng Python logging để ghi log các hoạt động:
    - Kiểm tra proxy server có hoạt động không
    - Thử các proxy server khác nhau
    - Kiểm tra username/password của proxy
+
+5. **Lỗi khi chạy với Docker:**
+   - Đảm bảo Docker đang chạy: `docker --version`
+   - Kiểm tra file `.env` có trong thư mục project
+   - Xem logs container: `docker-compose logs -f`
+   - Restart container: `docker-compose restart`
 
 ### Debug mode:
 
