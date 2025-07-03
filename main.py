@@ -85,16 +85,8 @@ def main():
         
         # Create Telegram application with proxy support
         if proxy_url:
-            # Create HTTP client with SOCKS proxy
-            httpx_client = httpx.AsyncClient(
-                proxies=proxy_url,
-                timeout=httpx.Timeout(30.0)
-            )
-            request = HTTPXRequest(
-                http_version="1.1",
-                client=httpx_client
-            )
-            application = Application.builder().token(telegram_token).request(request).build()
+            # Create application with proxy support
+            application = Application.builder().token(telegram_token).proxy(proxy_url).build()
         else:
             # Create application without proxy
             application = Application.builder().token(telegram_token).build()
