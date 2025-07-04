@@ -55,9 +55,9 @@ Bạn là một AI assistant điều khiển máy tính cá nhân. Phân tích t
 Tin nhắn: "{message}"
 
 Các hành động có thể thực hiện:
-1. turn_on_pc: Bật máy tính (các từ khóa: bật, mở, khởi động, turn on, start, power on)
-2. turn_off_pc: Tắt máy tính (các từ khóa: tắt, đóng, shutdown, turn off, power off)
-3. check_pc_status: Kiểm tra trạng thái máy tính (các từ khóa: kiểm tra, trạng thái, status, check)
+1. turn_on_pc: Bật máy tính (các từ khóa: bật, mở, khởi động, turn on, start, power on, pc on, turn on pc)
+2. turn_off_pc: Tắt máy tính (các từ khóa: tắt, đóng, shutdown, turn off, power off, pc off, turn off pc)
+3. check_pc_status: Kiểm tra trạng thái máy tính (các từ khóa: kiểm tra, trạng thái, status, check, pc online, pc status)
 
 Nếu tin nhắn có ý định thực hiện một trong 3 hành động trên, hãy trả lời CHÍNH XÁC với format:
 FUNCTION_CALL: [tên_function]
@@ -114,12 +114,10 @@ Nếu không phải 3 hành động trên, hãy trả lời tự nhiên như m�
         """
         try:
             prompt = f"""
-Bạn là một AI assistant thân thiện hỗ trợ điều khiển máy tính cá nhân. 
-Hãy trả lời tin nhắn sau một cách tự nhiên và hữu ích:
-
+Bạn là một trợ lý ảo thân thiện hỗ trợ điều khiển máy tính cá nhân. 
+Hãy trả lời tin nhắn sau một cách tự nhiên:
 Tin nhắn: "{message}"
-
-Trả lời bằng tiếng Việt một cách thân thiện và hữu ích.
+Trả lời bằng tiếng Việt một cách thân thiện.
 """
             
             response = self.model.generate_content(prompt)

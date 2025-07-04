@@ -30,7 +30,7 @@ class PCControlBot:
         welcome_message = f"""
 🖥️ **Chào mừng {user.first_name}!**
 
-Tôi là bot điều khiển máy tính cá nhân của bạn. Tôi có thể:
+Tôi là trợ lý điều khiển máy tính cá nhân của bạn. Tôi có thể:
 
 🔵 **Bật máy tính** - Gửi: "bật máy tính", "mở máy", "turn on pc"
 🔴 **Tắt máy tính** - Gửi: "tắt máy tính", "shutdown", "turn off pc"
@@ -50,9 +50,9 @@ Hãy gửi tin nhắn để bắt đầu điều khiển máy tính của bạn.
 🆘 **Hướng dẫn sử dụng:**
 
 **Các lệnh điều khiển máy tính:**
-• Bật máy: "bật máy tính", "mở máy", "khởi động máy"
-• Tắt máy: "tắt máy tính", "shutdown", "tắt nguồn"
-• Kiểm tra: "kiểm tra máy tính", "trạng thái máy", "pc status"
+• Bật máy: "bật máy tính", "mở máy", "khởi động máy", "pc on", "turn on pc"
+• Tắt máy: "tắt máy tính", "shutdown", "tắt nguồn", "pc off", "turn off pc"
+• Kiểm tra: "kiểm tra máy tính", "trạng thái máy", "pc status", "check pc", "pc online", "pc status"
 
 **Các lệnh bot:**
 • /start - Bắt đầu sử dụng bot
